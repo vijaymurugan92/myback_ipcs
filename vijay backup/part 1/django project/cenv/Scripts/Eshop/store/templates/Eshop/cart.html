@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .cart-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .item-details {
+            flex: 1;
+        }
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .item-quantity {
+            font-size: 16px;
+            color: #555;
+        }
+        .item-price {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .place-order-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+
+        {% if cart %}
+            {% for item in cart %}
+                <div class="cart-item">
+                    <div class="item-details">
+                        <div class="item-name">{{ item.product.name }}</div>
+                        <div class="item-quantity">Quantity: {{ item.quantity }}</div>
+                    </div>
+                    <div class="item-price">${{ item.price }}</div>
+                </div>
+            {% endfor %}
+            <div class="total">
+                Total: ${{ total_price }}
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="place-order-btn">Place Order</button>
+            </form>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

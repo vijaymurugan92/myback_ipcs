@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .orders-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .order-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .order-item h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .order-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+        .order-details span {
+            display: block;
+        }
+        .order-status {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: green;
+        }
+        .order-status.pending {
+            color: orange;
+        }
+        .no-orders {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="orders-container">
+        <h2>Your Orders</h2>
+
+        {% if orders %}
+            {% for order in orders %}
+                <div class="order-item">
+                    <h3>{{ order.product.name }}</h3>
+                    <div class="order-details">
+                        <span>Quantity: {{ order.quantity }}</span>
+                        <span>Price: ${{ order.price }}</span>
+                        <span>Date: {{ order.date }}</span>
+                    </div>
+                    <div class="order-status {% if not order.status %}pending{% endif %}">
+                        {% if order.status %}
+                            Delivered
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-orders">
+                <p>You have not placed any orders yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
